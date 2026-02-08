@@ -9,6 +9,7 @@ import certificate3 from '../data/certificate_3.jpg';
 import certificate4 from '../data/certificate_4.jpg';
 import certificate5 from '../data/certificate_5.jpg';
 import certificate6 from '../data/certificate_6.jpg';
+import headCoordinatorCert from '../data/HEAD COORDINATOR CERTIFICATE.jpg';
 
 const DEFAULT_IMAGES = [
   {
@@ -34,6 +35,10 @@ const DEFAULT_IMAGES = [
   {
     src: certificate6,
     alt: 'Certificate 6'
+  },
+  {
+    src: headCoordinatorCert,
+    alt: 'Head Coordinator Certificate - TechnoSapiens 2K26'
   }
 ];
 

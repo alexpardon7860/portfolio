@@ -184,8 +184,12 @@ export default function RadialOrbitalTimeline({ timelineData }) {
               <div
                 key={item.id}
                 ref={(el) => (nodeRefs.current[item.id] = el)}
-                className="absolute transition-all duration-700 cursor-pointer"
-                style={{ ...nodeStyle, willChange: 'transform, opacity' }}
+                className="absolute cursor-pointer"
+                style={{
+                  ...nodeStyle,
+                  willChange: 'transform, opacity',
+                  transition: 'transform 0.7s ease-out, opacity 0.7s ease-out'
+                }}
                 onClick={(e) => {
                   e.stopPropagation();
                   toggleItem(item.id);
@@ -219,9 +223,12 @@ export default function RadialOrbitalTimeline({ timelineData }) {
                         ? "border-slate-300 animate-pulse shadow-slate-300/50"
                         : "border-amber-500/50 hover:border-amber-400"
                     }
-                  transition-all duration-300 transform
+                  transform
                   ${isExpanded ? "md:scale-150 scale-125" : ""}
                 `}
+                  style={{
+                    transition: 'transform 0.3s ease-out, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease'
+                  }}
                 >
                   <Icon size={14} className="md:w-4 md:h-4" />
                 </div>
@@ -230,9 +237,12 @@ export default function RadialOrbitalTimeline({ timelineData }) {
                   className={`
                   absolute top-10 md:top-12 whitespace-nowrap
                   text-xs md:text-xs font-semibold tracking-wider
-                  transition-all duration-300
+                  transform
                   ${isExpanded ? "text-yellow-300 md:scale-125 scale-110" : "text-amber-300/90"}
                 `}
+                  style={{
+                    transition: 'transform 0.3s ease-out, color 0.3s ease'
+                  }}
                 >
                   {item.title}
                 </div>

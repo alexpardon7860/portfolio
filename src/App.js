@@ -38,6 +38,7 @@ function App() {
               openedImageHeight="min(360px, 54vw)"
               fit={0.75}
               minRadius={400}
+              grayscale={false}
             />
           </div>
         </div>
