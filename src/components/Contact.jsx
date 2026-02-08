@@ -23,15 +23,38 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Mock submission - will be connected to backend later
-    setTimeout(() => {
+    try {
+      const API_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
+      const response = await fetch(`${API_URL}/api/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send email');
+      }
+
+      const data = await response.json();
+
       toast({
-        title: "Message Sent!",
+        title: "Message Sent! ✨",
         description: "Thanks for reaching out! I'll get back to you soon.",
       });
+
       setFormData({ name: '', email: '', subject: '', message: '' });
+    } catch (error) {
+      console.error('Error sending email:', error);
+      toast({
+        title: "Oops! Something went wrong",
+        description: "Please try again or email me directly.",
+        variant: "destructive",
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
   };
 
   const contactMethods = [

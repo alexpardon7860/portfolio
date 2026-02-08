@@ -36,7 +36,7 @@ export const experience = [
     type: "Internship",
     description: "Full-stack web development and design",
     responsibilities: [
-      "Developed & designed gqmscertification.com from scratch",
+      "Developed & designed gqmscertifications.com from scratch",
       "Revamped homepage of vqms.co.in using WordPress",
       "Designed posters and marketing materials for VQMS and OSPNL"
     ],
@@ -165,7 +165,7 @@ export const projects = [
     technologies: ["WordPress", "PHP", "MySQL", "JavaScript", "CSS"],
     image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&q=80",
     github: "#",
-    demo: "https://gqmscertification.com",
+    demo: "https://gqmscertifications.com",
     featured: false
   }
 ];
