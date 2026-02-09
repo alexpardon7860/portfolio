@@ -69,7 +69,7 @@ const Navbar = () => {
     <>
       {/* Desktop & Tablet Navigation */}
       <nav
-        className={`absolute md:fixed top-0 left-0 right-0 z-[9999] transition-all duration-300 ${isScrolled
+        className={`absolute md:fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
           ? 'bg-slate-900/95 backdrop-blur-lg shadow-lg border-b border-slate-800'
           : 'bg-transparent'
           }`}
@@ -111,7 +111,7 @@ const Navbar = () => {
       </nav>
 
       {/* Mobile Dock Navigation - Fixed Bottom */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-[9999]">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50">
         <Dock
           items={dockItems}
           magnification={55}

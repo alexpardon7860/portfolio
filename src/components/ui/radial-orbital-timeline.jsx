@@ -100,8 +100,8 @@ export default function RadialOrbitalTimeline({ timelineData }) {
 
   const calculateNodePosition = (index, total) => {
     const angle = ((index / total) * 360 + rotationAngle) % 360;
-    // Responsive radius based on screen size
-    const baseRadius = typeof window !== 'undefined' && window.innerWidth < 768 ? 150 : 280;
+    // Responsive radius based on screen size - reduced mobile radius to prevent overflow
+    const baseRadius = typeof window !== 'undefined' && window.innerWidth < 768 ? 120 : 280;
     const radius = baseRadius;
     const radian = (angle * Math.PI) / 180;
 
@@ -165,7 +165,7 @@ export default function RadialOrbitalTimeline({ timelineData }) {
             <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-gradient-to-br from-white via-slate-100 to-blue-50 backdrop-blur-md shadow-inner"></div>
           </div>
 
-          <div className="absolute w-[300px] h-[300px] md:w-[560px] md:h-[560px] rounded-full border-2 border-yellow-500/30 shadow-lg shadow-yellow-500/20"></div>
+          <div className="absolute w-[240px] h-[240px] md:w-[560px] md:h-[560px] rounded-full border-2 border-yellow-500/30 shadow-lg shadow-yellow-500/20"></div>
 
           {timelineData.map((item, index) => {
             const position = calculateNodePosition(index, timelineData.length);

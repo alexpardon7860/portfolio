@@ -1,12 +1,14 @@
 /* Global smooth scrolling */
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 
 /* Remove default margin and ensure full height */
 .App {
     min-height: 100vh;
     width: 100%;
+    overflow-x: hidden;
 }
 
 /* Line clamp utilities */
