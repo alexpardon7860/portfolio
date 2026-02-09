@@ -74,7 +74,7 @@ const Experience = () => {
   ];
 
   return (
-    <section id="experience" className="py-32 bg-slate-900 relative overflow-hidden">
+    <section id="experience" className="py-32 bg-slate-900 relative overflow-visible">
       {/* Background Elements */}
       <div className="absolute top-1/4 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
       <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
@@ -247,7 +247,7 @@ const Experience = () => {
             <p className="text-slate-400 text-sm md:text-lg mb-0">Interactive timeline - click any node to explore details</p>
           </div>
 
-          <div className="relative h-[500px] md:h-[700px] w-full -mt-8 md:mt-0">
+          <div className="relative h-[500px] md:h-[700px] w-full -mt-8 md:mt-0 overflow-visible px-4 md:px-0">
             <RadialOrbitalTimeline timelineData={achievementsData} />
 
             {/* Instructions Overlay */}
