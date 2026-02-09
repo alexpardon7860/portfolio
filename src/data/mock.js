@@ -10,7 +10,8 @@ export const personalInfo = {
   github: "#",
   location: "Delhi, India",
   bio: "Versatile and results-driven Computer Application student with a strong foundation in Web Development and Data Science. Proficient in HTML, CSS, JavaScript, PHP, Python, and WordPress, with hands-on experience in machine learning and deep learning projects. Skilled in building intelligent systems including gesture translators, personality predictors, and vehicle detectors. Passionate about crafting user-centric digital solutions, combining technical development with UI/UX design expertise.",
-  resumeUrl: "/Praveen_Garg_Resume.pdf"
+  resumeUrl: "/Praveen_Garg_Resume.pdf",
+  pptUrl: "/Support Vector machines Classifier.pptx"
 };
 
 export const experience = [

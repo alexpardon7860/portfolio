@@ -113,7 +113,7 @@ const About = () => {
               <p className="text-lg text-slate-300 leading-relaxed">
                 {personalInfo.bio}
               </p>
-              
+
               {/* Principles */}
               <div className="space-y-4">
                 <h3 className="text-xl font-bold text-white flex items-center gap-2">
@@ -171,9 +171,8 @@ const About = () => {
             return (
               <div
                 key={index}
-                className={`group p-8 bg-slate-900/50 backdrop-blur-sm rounded-3xl border border-slate-800 hover:border-${item.color}-500/50 transition-all duration-500 hover:transform hover:scale-105 ${
-                  isVisible ? 'animate-slide-up-fade' : 'opacity-0'
-                }`}
+                className={`group p-8 bg-slate-900/50 backdrop-blur-sm rounded-3xl border border-slate-800 hover:border-${item.color}-500/50 transition-all duration-500 hover:transform hover:scale-105 ${isVisible ? 'animate-slide-up-fade' : 'opacity-0'
+                  }`}
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className={`w-16 h-16 bg-gradient-to-br ${item.gradient} rounded-2xl flex items-center justify-center mb-6 group-hover:shadow-2xl group-hover:shadow-${item.color}-500/50 transition-all duration-300 group-hover:scale-110`}>

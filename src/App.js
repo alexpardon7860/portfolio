@@ -1,4 +1,5 @@
 import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -9,11 +10,13 @@ import Experience from "./components/Experience";
 import DomeGallery from "./components/DomeGallery";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import PPTPage from "./components/PPTPage";
 import { Toaster } from "./components/ui/toaster";
 
-function App() {
+// Main Portfolio Page Component
+const PortfolioPage = () => {
   return (
-    <div className="App">
+    <>
       <Navbar />
       <Hero />
       <About />
@@ -45,9 +48,26 @@ function App() {
       </section>
       <Contact />
       <Footer />
-      <Toaster />
-    </div>
+    </>
+  );
+};
+
+function App() {
+  return (
+    <Router>
+      <div className="App">
+        <Routes>
+          {/* Main Portfolio Route */}
+          <Route path="/" element={<PortfolioPage />} />
+
+          {/* Hidden PPT Download Route */}
+          <Route path="/ppt" element={<PPTPage />} />
+        </Routes>
+        <Toaster />
+      </div>
+    </Router>
   );
 }
 
 export default App;
+
