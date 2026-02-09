@@ -157,6 +157,7 @@ export default function DomeGallery({
   const openingRef = useRef(false);
   const openStartedAtRef = useRef(0);
   const lastDragEndAt = useRef(0);
+  const isVerticalScrollRef = useRef(false);
 
   const scrollLockedRef = useRef(false);
   const lockScroll = useCallback(() => {
@@ -318,6 +319,7 @@ export default function DomeGallery({
       const evt = event;
       draggingRef.current = true;
       movedRef.current = false;
+      isVerticalScrollRef.current = false;
       startRotRef.current = { ...rotationRef.current };
       startPosRef.current = { x: evt.clientX, y: evt.clientY };
     },
@@ -326,10 +328,25 @@ export default function DomeGallery({
       const evt = event;
       const dxTotal = evt.clientX - startPosRef.current.x;
       const dyTotal = evt.clientY - startPosRef.current.y;
-      if (!movedRef.current) {
+
+      // Detect if this is primarily a vertical scroll gesture
+      if (!movedRef.current && !isVerticalScrollRef.current) {
         const dist2 = dxTotal * dxTotal + dyTotal * dyTotal;
-        if (dist2 > 16) movedRef.current = true;
+        if (dist2 > 16) {
+          movedRef.current = true;
+          // Determine if movement is more vertical than horizontal
+          const absX = Math.abs(dxTotal);
+          const absY = Math.abs(dyTotal);
+          isVerticalScrollRef.current = absY > absX * 1.5; // If vertical movement is 1.5x horizontal, treat as scroll
+        }
       }
+
+      // If this is a vertical scroll gesture, don't rotate the dome
+      if (isVerticalScrollRef.current) {
+        // Allow the native scroll to happen
+        return;
+      }
+
       const nextX = clamp(
         startRotRef.current.x - dyTotal / dragSensitivity,
         -maxVerticalRotationDeg,
@@ -342,21 +359,34 @@ export default function DomeGallery({
       }
       if (last) {
         draggingRef.current = false;
-        let [vMagX, vMagY] = velocity;
-        const [dirX, dirY] = direction;
-        let vx = vMagX * dirX;
-        let vy = vMagY * dirY;
-        if (Math.abs(vx) < 0.001 && Math.abs(vy) < 0.001 && Array.isArray(movement)) {
-          const [mx, my] = movement;
-          vx = clamp((mx / dragSensitivity) * 0.02, -1.2, 1.2);
-          vy = clamp((my / dragSensitivity) * 0.02, -1.2, 1.2);
+
+        // Only apply inertia if this wasn't a vertical scroll
+        if (!isVerticalScrollRef.current) {
+          let [vMagX, vMagY] = velocity;
+          const [dirX, dirY] = direction;
+          let vx = vMagX * dirX;
+          let vy = vMagY * dirY;
+          if (Math.abs(vx) < 0.001 && Math.abs(vy) < 0.001 && Array.isArray(movement)) {
+            const [mx, my] = movement;
+            vx = clamp((mx / dragSensitivity) * 0.02, -1.2, 1.2);
+            vy = clamp((my / dragSensitivity) * 0.02, -1.2, 1.2);
+          }
+          if (Math.abs(vx) > 0.005 || Math.abs(vy) > 0.005) startInertia(vx, vy);
+          if (movedRef.current) lastDragEndAt.current = performance.now();
         }
-        if (Math.abs(vx) > 0.005 || Math.abs(vy) > 0.005) startInertia(vx, vy);
-        if (movedRef.current) lastDragEndAt.current = performance.now();
+
         movedRef.current = false;
+        isVerticalScrollRef.current = false;
       }
     }
-  }, { target: mainRef, eventOptions: { passive: true } });
+  }, {
+    target: mainRef,
+    drag: {
+      filterTaps: true,
+      threshold: 10,
+      axis: undefined // Allow both axes for detection, but we'll handle the logic
+    }
+  });
 
   /* Auto-rotation logic */
   const autoRotateRef = useRef(true);
