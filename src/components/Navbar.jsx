@@ -70,8 +70,8 @@ const Navbar = () => {
       {/* Desktop & Tablet Navigation */}
       <nav
         className={`absolute md:fixed top-0 left-0 right-0 z-[9999] transition-all duration-300 ${isScrolled
-            ? 'bg-slate-900/95 backdrop-blur-lg shadow-lg border-b border-slate-800'
-            : 'bg-transparent'
+          ? 'bg-slate-900/95 backdrop-blur-lg shadow-lg border-b border-slate-800'
+          : 'bg-transparent'
           }`}
       >
         <div className="max-w-7xl mx-auto px-6">
