@@ -80,8 +80,8 @@ const Skills = ({ id }) => {
                 key={category.id}
                 onClick={() => setActiveCategory(category.id)}
                 className={`group relative px-6 py-3 rounded-2xl font-semibold transition-all duration-300 ${isActive
-                    ? `bg-gradient-to-r ${getGradientClasses(category.color)} text-white shadow-2xl shadow-${category.color}-500/50 scale-110`
-                    : 'bg-slate-800/50 backdrop-blur-sm text-slate-300 hover:bg-slate-800 border border-slate-700 hover:border-slate-600'
+                  ? `bg-gradient-to-r ${getGradientClasses(category.color)} text-white shadow-2xl shadow-${category.color}-500/50 scale-110`
+                  : 'bg-slate-800/50 backdrop-blur-sm text-slate-300 hover:bg-slate-800 border border-slate-700 hover:border-slate-600'
                   }`}
               >
                 <span className="flex items-center gap-2">
@@ -126,9 +126,31 @@ const Skills = ({ id }) => {
 
                     {/* Content */}
                     <div className="relative flex flex-col items-center text-center">
+                      {/* Floating Particles */}
+                      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                        {[...Array(5)].map((_, i) => (
+                          <div
+                            key={i}
+                            className={`absolute w-1 h-1 rounded-full bg-gradient-to-r ${getGradientClasses(activeColor)} opacity-40`}
+                            style={{
+                              top: `${Math.random() * 100}%`,
+                              left: `${Math.random() * 100}%`,
+                              animation: `particle-float ${3 + i}s ease-in-out infinite`,
+                              animationDelay: `${i * 0.5}s`
+                            }}
+                          ></div>
+                        ))}
+                      </div>
+
+                      {/* Glowing Orbs */}
+                      <div className="absolute top-4 right-4 w-2 h-2 rounded-full bg-cyan-400/30 animate-pulse"></div>
+                      <div className="absolute bottom-4 left-4 w-1.5 h-1.5 rounded-full bg-blue-400/30 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+
                       {/* Icon/Letter */}
-                      <div className={`w-20 h-20 mb-4 rounded-2xl bg-gradient-to-br ${getGradientClasses(activeColor)} flex items-center justify-center shadow-lg transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}>
-                        <span className="text-3xl font-black text-white">{skill.name.charAt(0)}</span>
+                      <div className={`w-20 h-20 mb-4 rounded-2xl bg-gradient-to-br ${getGradientClasses(activeColor)} flex items-center justify-center shadow-lg transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 relative overflow-hidden`}>
+                        <span className="text-3xl font-black text-white relative z-10">{skill.name.charAt(0)}</span>
+                        {/* Shimmer effect on icon */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                       </div>
 
                       {/* Skill Name */}
@@ -200,6 +222,25 @@ const Skills = ({ id }) => {
           }
           100% {
             transform: translateX(100%);
+          }
+        }
+
+        @keyframes particle-float {
+          0%, 100% {
+            transform: translate(0, 0);
+            opacity: 0.2;
+          }
+          25% {
+            transform: translate(10px, -15px);
+            opacity: 0.5;
+          }
+          50% {
+            transform: translate(-15px, -25px);
+            opacity: 0.7;
+          }
+          75% {
+            transform: translate(15px, -10px);
+            opacity: 0.5;
           }
         }
 
