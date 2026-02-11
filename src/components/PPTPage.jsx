@@ -46,7 +46,7 @@ const PPTPage = () => {
             filename: "Evolution-and-Vision-of-the-Internet-of-Things.pptx",
             url: personalInfo.pptUrl,
             size: "14.5 MB",
-            slides: 30,
+            slides: 9,
             gradient: "from-purple-500 to-pink-600"
         }
     ];
