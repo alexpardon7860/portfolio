@@ -47,17 +47,6 @@ const Skills = ({ id }) => {
     return gradientMap[color];
   };
 
-  const getColorClasses = (color) => {
-    const colorMap = {
-      cyan: 'text-cyan-400 border-cyan-500/30 bg-cyan-500/10',
-      blue: 'text-blue-400 border-blue-500/30 bg-blue-500/10',
-      purple: 'text-purple-400 border-purple-500/30 bg-purple-500/10',
-      orange: 'text-orange-400 border-orange-500/30 bg-orange-500/10',
-      lime: 'text-lime-400 border-lime-500/30 bg-lime-500/10'
-    };
-    return colorMap[color];
-  };
-
   const activeColor = categories.find(c => c.id === activeCategory)?.color || 'cyan';
 
   return (
@@ -90,11 +79,10 @@ const Skills = ({ id }) => {
               <button
                 key={category.id}
                 onClick={() => setActiveCategory(category.id)}
-                className={`group relative px-6 py-3 rounded-2xl font-semibold transition-all duration-300 ${
-                  isActive
+                className={`group relative px-6 py-3 rounded-2xl font-semibold transition-all duration-300 ${isActive
                     ? `bg-gradient-to-r ${getGradientClasses(category.color)} text-white shadow-2xl shadow-${category.color}-500/50 scale-110`
                     : 'bg-slate-800/50 backdrop-blur-sm text-slate-300 hover:bg-slate-800 border border-slate-700 hover:border-slate-600'
-                }`}
+                  }`}
               >
                 <span className="flex items-center gap-2">
                   <Icon className="w-5 h-5" />
@@ -108,50 +96,53 @@ const Skills = ({ id }) => {
           })}
         </div>
 
-        {/* Skills Display */}
-        <div className="max-w-5xl mx-auto">
-          <div className="grid gap-6">
-            {skills[activeCategory]?.map((skill, index) => (
-              <div
-                key={skill.name}
-                className="group"
-                style={{
-                  animation: isVisible ? `slide-in-right 0.5s ease-out ${index * 0.1}s forwards` : 'none',
-                  opacity: isVisible ? 1 : 0
-                }}
-              >
-                {/* Skill Card */}
-                <div className="relative p-6 bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700 hover:border-cyan-500/50 transition-all duration-300">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-4">
-                      <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${getGradientClasses(activeColor)} flex items-center justify-center font-black text-white text-xl`}>
-                        {skill.name.charAt(0)}
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">{skill.name}</h3>
-                        <p className="text-sm text-slate-500">Proficiency Level</p>
-                      </div>
-                    </div>
-                    <div className={`text-3xl font-black bg-gradient-to-r ${getGradientClasses(activeColor)} bg-clip-text text-transparent`}>
-                      {skill.level}%
-                    </div>
-                  </div>
+        {/* Skills Display - Clean Design */}
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {skills[activeCategory]?.map((skill, index) => {
+              return (
+                <div
+                  key={skill.name}
+                  className="group relative"
+                  style={{
+                    animation: isVisible ? `scale-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) ${index * 0.1}s forwards` : 'none',
+                    opacity: isVisible ? 1 : 0,
+                    transform: isVisible ? 'scale(1)' : 'scale(0.8)'
+                  }}
+                >
+                  {/* Main Card */}
+                  <div className="relative p-8 bg-gradient-to-br from-slate-800/80 via-slate-800/50 to-slate-900/80 backdrop-blur-xl rounded-3xl border border-slate-700 hover:border-cyan-500/50 transition-all duration-500 overflow-hidden group-hover:scale-105 group-hover:shadow-2xl group-hover:shadow-cyan-500/20">
 
-                  {/* Progress Bar */}
-                  <div className="relative h-3 bg-slate-900 rounded-full overflow-hidden">
-                    <div
-                      className={`absolute inset-y-0 left-0 bg-gradient-to-r ${getGradientClasses(activeColor)} rounded-full transition-all duration-1000 ease-out`}
-                      style={{
-                        width: isVisible ? `${skill.level}%` : '0%',
-                        transitionDelay: `${index * 0.1}s`
-                      }}
-                    >
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer"></div>
+                    {/* Hexagonal Pattern Background */}
+                    <div className="absolute inset-0 opacity-5">
+                      <div className="absolute inset-0" style={{
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l25.98 15v30L30 60 4.02 45V15z' fill='none' stroke='%2300ffff' stroke-width='1'/%3E%3C/svg%3E")`,
+                        backgroundSize: '60px 60px'
+                      }}></div>
+                    </div>
+
+                    {/* Glow Effect */}
+                    <div className={`absolute -inset-1 bg-gradient-to-r ${getGradientClasses(activeColor)} opacity-0 group-hover:opacity-20 blur-2xl transition-opacity duration-500 -z-10`}></div>
+
+                    {/* Content */}
+                    <div className="relative flex flex-col items-center text-center">
+                      {/* Icon/Letter */}
+                      <div className={`w-20 h-20 mb-4 rounded-2xl bg-gradient-to-br ${getGradientClasses(activeColor)} flex items-center justify-center shadow-lg transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}>
+                        <span className="text-3xl font-black text-white">{skill.name.charAt(0)}</span>
+                      </div>
+
+                      {/* Skill Name */}
+                      <h3 className="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors duration-300">
+                        {skill.name}
+                      </h3>
+
+                      {/* Animated Line Decoration */}
+                      <div className="absolute bottom-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
@@ -181,14 +172,14 @@ const Skills = ({ id }) => {
       </div>
 
       <style jsx>{`
-        @keyframes slide-in-right {
+        @keyframes scale-in {
           from {
             opacity: 0;
-            transform: translateX(50px);
+            transform: scale(0.8);
           }
           to {
             opacity: 1;
-            transform: translateX(0);
+            transform: scale(1);
           }
         }
 

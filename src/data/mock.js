@@ -68,31 +68,31 @@ export const education = [
 
 export const skills = {
   frontend: [
-    { name: "HTML5", level: 95 },
-    { name: "CSS3", level: 90 },
-    { name: "JavaScript", level: 85 },
-    { name: "WordPress", level: 88 }
+    { name: "HTML5", level: 70 },
+    { name: "CSS3", level: 68 },
+    { name: "JavaScript", level: 65 },
+    { name: "WordPress", level: 72 }
   ],
   backend: [
-    { name: "PHP", level: 80 },
-    { name: "MySQL", level: 75 },
-    { name: "Python", level: 85 }
+    { name: "PHP", level: 65 },
+    { name: "MySQL", level: 62 },
+    { name: "Python", level: 70 }
   ],
   programming: [
-    { name: "Java", level: 75 },
-    { name: "C", level: 80 },
-    { name: "Python", level: 85 }
+    { name: "Java", level: 62 },
+    { name: "C", level: 65 },
+    { name: "Python", level: 70 }
   ],
   design: [
-    { name: "Figma", level: 85 },
-    { name: "Photoshop", level: 80 },
-    { name: "UX Research", level: 75 },
-    { name: "Wireframing", level: 82 }
+    { name: "Figma", level: 68 },
+    { name: "Photoshop", level: 65 },
+    { name: "UX Research", level: 62 },
+    { name: "Wireframing", level: 66 }
   ],
   dataScience: [
-    { name: "Machine Learning", level: 80 },
-    { name: "Deep Learning", level: 75 },
-    { name: "Data Analysis", level: 78 }
+    { name: "Machine Learning", level: 65 },
+    { name: "Deep Learning", level: 62 },
+    { name: "Data Analysis", level: 64 }
   ]
 };
 

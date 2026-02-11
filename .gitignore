@@ -23,3 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 /MEGAsync Downloads
 /MEGAsync Downloads\aiw
+# Local Netlify folder
+.netlify
