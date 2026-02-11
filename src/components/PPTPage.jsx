@@ -41,12 +41,12 @@ const PPTPage = () => {
     const pptFiles = [
         {
             id: 1,
-            title: "Support Vector Machines Classifier",
-            description: "Comprehensive presentation on SVM algorithms and classification techniques",
-            filename: "Support Vector machines Classifier.pptx",
+            title: "Evolution and Vision of the Internet of Things",
+            description: "Comprehensive presentation on IoT evolution, technologies, and future vision",
+            filename: "Evolution-and-Vision-of-the-Internet-of-Things.pptx",
             url: personalInfo.pptUrl,
-            size: "188 KB",
-            slides: 12,
+            size: "14.5 MB",
+            slides: 30,
             gradient: "from-purple-500 to-pink-600"
         }
     ];
@@ -224,8 +224,8 @@ const PPTPage = () => {
                                 <div className="text-sm text-slate-400">Available Files</div>
                             </div>
                             <div className="p-6 bg-gradient-to-br from-pink-500/10 to-red-600/10 rounded-2xl border border-pink-500/20">
-                                <div className="text-4xl font-black text-pink-400 mb-2">188</div>
-                                <div className="text-sm text-slate-400">KB Total Size</div>
+                                <div className="text-4xl font-black text-pink-400 mb-2">14.5</div>
+                                <div className="text-sm text-slate-400">MB Total Size</div>
                             </div>
                         </div>
                     </div>
