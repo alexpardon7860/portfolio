@@ -63,12 +63,12 @@ const Hero = () => {
     }
     return profile[field];
   }, [currentProfileIndex, fieldIndex, developerProfiles, fields]);
-  
+
   // Canvas particle animation
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    
+
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -140,7 +140,7 @@ const Hero = () => {
   useEffect(() => {
     const fullText = getCurrentFieldContent();
     const typingSpeed = isDeleting ? 30 : 80;
-    
+
     const timer = setTimeout(() => {
       if (!isDeleting) {
         // Typing
@@ -190,7 +190,7 @@ const Hero = () => {
     };
 
     const currentField = fields[fieldIndex];
-    
+
     // Fill completed fields
     for (let i = 0; i < fieldIndex; i++) {
       const field = fields[i];
@@ -231,16 +231,39 @@ const Hero = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Mock submission - will be connected to backend later
-    setTimeout(() => {
+    try {
+      // Using Netlify serverless function
+      const response = await fetch('/.netlify/functions/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send email');
+      }
+
+      await response.json();
+
       toast({
-        title: "Message Sent!",
+        title: "Message Sent! ✨",
         description: "Thanks for reaching out! I'll get back to you soon.",
       });
+
       setFormData({ name: '', email: '', subject: '', message: '' });
-      setIsSubmitting(false);
       setIsContactDialogOpen(false);
-    }, 1500);
+    } catch (error) {
+      console.error('Error sending email:', error);
+      toast({
+        title: "Oops! Something went wrong",
+        description: "Please try again or email me directly.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const scrollToNext = () => {
@@ -251,22 +274,22 @@ const Hero = () => {
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-slate-950">
       {/* Animated Canvas Background */}
       <canvas ref={canvasRef} className="absolute inset-0 opacity-40" />
-      
+
       {/* Dynamic Gradient Orbs with parallax */}
-      <div 
+      <div
         className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl animate-pulse-slow"
         style={{
           transform: `translate(${(mousePosition.x - 50) * 0.02}px, ${(mousePosition.y - 50) * 0.02}px)`
         }}
       />
-      <div 
-        className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse-slow" 
-        style={{ 
+      <div
+        className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse-slow"
+        style={{
           animationDelay: '1s',
           transform: `translate(${(mousePosition.x - 50) * -0.02}px, ${(mousePosition.y - 50) * -0.02}px)`
-        }} 
+        }}
       />
-      <div 
+      <div
         className="absolute top-1/2 left-1/2 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl animate-pulse-slow"
         style={{
           animationDelay: '2s',
@@ -365,9 +388,9 @@ const Hero = () => {
             <div className="relative group">
               {/* Glow effect */}
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-3xl blur-3xl opacity-20 group-hover:opacity-30 transition-opacity duration-500 animate-pulse-slow"></div>
-              
+
               {/* Main card */}
-              <div 
+              <div
                 className="relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-xl rounded-3xl p-8 border border-slate-700/50 shadow-2xl transition-all duration-300 hover:border-cyan-500/30 hover:shadow-cyan-500/10"
                 style={{
                   transform: `perspective(1000px) rotateX(${(mousePosition.y - 50) * -0.01}deg) rotateY(${(mousePosition.x - 50) * 0.01}deg)`

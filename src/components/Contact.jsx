@@ -24,8 +24,8 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      const API_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
-      const response = await fetch(`${API_URL}/api/contact`, {
+      // Using Netlify serverless function
+      const response = await fetch('/.netlify/functions/send-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
