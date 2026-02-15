@@ -1,5 +1,8 @@
 import React, { useEffect, useState, useRef, useCallback, useMemo } from 'react';
 import { Code2, Sparkles, ArrowRight, Github, Linkedin, Mail, Send, X, Terminal, Braces } from 'lucide-react';
+import { FaPython, FaReact, FaJs, FaWordpress, FaPhp, FaFigma, FaDatabase } from 'react-icons/fa';
+import { SiTensorflow, SiFastapi, SiMongodb } from 'react-icons/si';
+import { Brain } from 'lucide-react';
 import { personalInfo } from '../data/mock';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { toast } from '../hooks/use-toast';
@@ -491,15 +494,33 @@ const Hero = () => {
             <span className="text-sm text-slate-500 font-medium">Tech Stack</span>
           </div>
           <div className="flex gap-4 animate-scroll">
-            {[...Array(2)].map((_, i) => (
-              <div key={i} className="flex gap-4 shrink-0">
-                {['Python', 'React', 'JavaScript', 'Machine Learning', 'TensorFlow', 'FastAPI', 'MongoDB', 'WordPress', 'PHP', 'Figma'].map((tech) => (
-                  <div key={tech} className="px-6 py-3 bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 text-slate-300 font-medium whitespace-nowrap hover:border-cyan-500/50 transition-colors">
-                    {tech}
-                  </div>
-                ))}
-              </div>
-            ))}
+            {[...Array(2)].map((_, i) => {
+              const techStack = [
+                { name: 'Python', icon: FaPython, color: 'text-blue-400' },
+                { name: 'React', icon: FaReact, color: 'text-cyan-400' },
+                { name: 'JavaScript', icon: FaJs, color: 'text-yellow-400' },
+                { name: 'Machine Learning', icon: Brain, color: 'text-purple-400' },
+                { name: 'TensorFlow', icon: SiTensorflow, color: 'text-orange-400' },
+                { name: 'FastAPI', icon: SiFastapi, color: 'text-teal-400' },
+                { name: 'MongoDB', icon: SiMongodb, color: 'text-green-400' },
+                { name: 'WordPress', icon: FaWordpress, color: 'text-blue-400' },
+                { name: 'PHP', icon: FaPhp, color: 'text-indigo-400' },
+                { name: 'Figma', icon: FaFigma, color: 'text-pink-400' }
+              ];
+              return (
+                <div key={i} className="flex gap-4 shrink-0">
+                  {techStack.map((tech) => {
+                    const Icon = tech.icon;
+                    return (
+                      <div key={tech.name} className="group px-6 py-3 bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 text-slate-300 font-medium whitespace-nowrap hover:border-cyan-500/50 hover:bg-slate-800/70 transition-all duration-300 flex items-center gap-3">
+                        <Icon className={`w-5 h-5 ${tech.color} group-hover:scale-110 transition-transform`} />
+                        <span>{tech.name}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

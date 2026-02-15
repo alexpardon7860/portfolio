@@ -1,10 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Code, Brain, Palette, Award, Rocket, Zap, Target } from 'lucide-react';
+import { Code, Brain, Palette, Award, Rocket, Zap, Target, Send } from 'lucide-react';
 import { personalInfo } from '../data/mock';
 import ProfileCard from './ProfileCard';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
+import { toast } from '../hooks/use-toast';
 
 const About = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [isContactDialogOpen, setIsContactDialogOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const sectionRef = useRef(null);
 
   useEffect(() => {
@@ -27,6 +37,52 @@ const About = () => {
       }
     };
   }, []);
+
+  const handleFormChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      // Using Netlify serverless function
+      const response = await fetch('/.netlify/functions/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send email');
+      }
+
+      await response.json();
+
+      toast({
+        title: "Message Sent! ✨",
+        description: "Thanks for reaching out! I'll get back to you soon.",
+      });
+
+      setFormData({ name: '', email: '', subject: '', message: '' });
+      setIsContactDialogOpen(false);
+    } catch (error) {
+      console.error('Error sending email:', error);
+      toast({
+        title: "Oops! Something went wrong",
+        description: "Please try again or email me directly.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const expertise = [
     {
@@ -100,7 +156,7 @@ const About = () => {
                 contactText="Contact"
                 showBehindGradient={true}
                 onContactClick={() => {
-                  window.location.href = `mailto:${personalInfo.email}`;
+                  setIsContactDialogOpen(true);
                 }}
               />
             </div>
@@ -202,6 +258,96 @@ const About = () => {
           animation: slide-up-fade 0.6s ease-out forwards;
         }
       `}</style>
+
+      {/* Contact Dialog */}
+      <Dialog open={isContactDialogOpen} onOpenChange={setIsContactDialogOpen}>
+        <DialogContent className="sm:max-w-[500px] bg-slate-900 border-slate-700">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+              Let's Talk
+            </DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleFormSubmit} className="space-y-4 mt-4">
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-slate-300 mb-2">
+                Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleFormChange}
+                required
+                className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
+                placeholder="Your name"
+              />
+            </div>
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-2">
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleFormChange}
+                required
+                className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
+                placeholder="your.email@example.com"
+              />
+            </div>
+            <div>
+              <label htmlFor="subject" className="block text-sm font-medium text-slate-300 mb-2">
+                Subject
+              </label>
+              <input
+                type="text"
+                id="subject"
+                name="subject"
+                value={formData.subject}
+                onChange={handleFormChange}
+                required
+                className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
+                placeholder="What's this about?"
+              />
+            </div>
+            <div>
+              <label htmlFor="message" className="block text-sm font-medium text-slate-300 mb-2">
+                Message
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                value={formData.message}
+                onChange={handleFormChange}
+                required
+                rows={4}
+                className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all resize-none"
+                placeholder="Your message..."
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            >
+              {isSubmitting ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  Sending...
+                </>
+              ) : (
+                <>
+                  <Send className="w-5 h-5" />
+                  Send Message
+                </>
+              )}
+            </button>
+          </form>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 };

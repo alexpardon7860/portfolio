@@ -1,6 +1,33 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Code, Database, Palette, Cpu, Brain, Sparkles } from 'lucide-react';
+import {
+  FaHtml5, FaCss3Alt, FaJs, FaWordpress, FaPhp, FaPython, FaJava, FaFigma
+} from 'react-icons/fa';
+import {
+  SiMysql, SiTensorflow, SiAdobephotoshop, SiC
+} from 'react-icons/si';
+import { BiData } from 'react-icons/bi';
 import { skills } from '../data/mock';
+
+// Icon mapping for each technology
+const techIcons = {
+  'HTML5': FaHtml5,
+  'CSS3': FaCss3Alt,
+  'JavaScript': FaJs,
+  'WordPress': FaWordpress,
+  'PHP': FaPhp,
+  'MySQL': SiMysql,
+  'Python': FaPython,
+  'Java': FaJava,
+  'C': SiC,
+  'Figma': FaFigma,
+  'Photoshop': SiAdobephotoshop,
+  'Machine Learning': Brain,
+  'Deep Learning': SiTensorflow,
+  'Data Analysis': BiData,
+  'UX Research': Palette,
+  'Wireframing': Code
+};
 
 const Skills = ({ id }) => {
   const [activeCategory, setActiveCategory] = useState('frontend');
@@ -146,9 +173,16 @@ const Skills = ({ id }) => {
                       <div className="absolute top-4 right-4 w-2 h-2 rounded-full bg-cyan-400/30 animate-pulse"></div>
                       <div className="absolute bottom-4 left-4 w-1.5 h-1.5 rounded-full bg-blue-400/30 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
 
-                      {/* Icon/Letter */}
+                      {/* Icon/Logo */}
                       <div className={`w-20 h-20 mb-4 rounded-2xl bg-gradient-to-br ${getGradientClasses(activeColor)} flex items-center justify-center shadow-lg transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 relative overflow-hidden`}>
-                        <span className="text-3xl font-black text-white relative z-10">{skill.name.charAt(0)}</span>
+                        {(() => {
+                          const TechIcon = techIcons[skill.name];
+                          return TechIcon ? (
+                            <TechIcon className="text-4xl text-white relative z-10" />
+                          ) : (
+                            <span className="text-3xl font-black text-white relative z-10">{skill.name.charAt(0)}</span>
+                          );
+                        })()}
                         {/* Shimmer effect on icon */}
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                       </div>
